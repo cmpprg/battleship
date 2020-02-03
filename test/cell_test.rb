@@ -11,4 +11,12 @@ class CellTest < Minitest::Test
     assert_instance_of Cell, cell
   end
 
+  def test_attributes
+    coordinate = "A1"
+    cell = Cell.new(coordinate)
+
+    assert_equal coordinate, cell.coordinate
+    assert_nil cell.ship
+  end
+
 end
