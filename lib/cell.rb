@@ -6,4 +6,8 @@ class Cell
     @ship = nil
   end
 
+  def empty?
+    true
+  end
+
 end

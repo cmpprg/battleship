@@ -19,4 +19,11 @@ class CellTest < Minitest::Test
     assert_nil cell.ship
   end
 
+  def test_cell_empty_method
+    coordinate = "A1"
+    cell = Cell.new(coordinate)
+
+    assert_equal true, cell.empty?
+  end
+
 end
