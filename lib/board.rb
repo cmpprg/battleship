@@ -27,7 +27,7 @@ class Board
   end
 
   def valid_placement?(ship, coordinates)
-    (ship.length == coordinates.length) && (horizontal?(coordinates) ^ vertical?(coordinates))
+    check_empty?(coordinates) && (ship.length == coordinates.length) && (horizontal?(coordinates) ^ vertical?(coordinates))
   end
 
   def horizontal?(coordinates)
@@ -72,6 +72,13 @@ class Board
     new_coord.any? do |new|
       new.eql?(letters)
     end
+  end
+
+  def check_empty?(coordinates)
+    coordinates.all? do |coord|
+      @cells[coord].empty?
+    end
+
   end
 
   def place(ship, coordinates)

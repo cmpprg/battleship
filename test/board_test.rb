@@ -88,6 +88,18 @@ class BoardTest < Minitest::Test
     assert_equal true, board.vertical_letters?(["B1", "C1"])
   end
 
+  def test_check_empty_method
+    board = Board.new
+    cruiser = Ship.new("Cruiser", 3)
+    submarine = Ship.new("Submarine", 2)
+    cruiser_coordinates = ["A1", "A2", "A3"]
+    submarine_coordinates = ["A1", "B1"]
+
+    assert_equal true, board.check_empty?(cruiser_coordinates)
+    board.place(cruiser, cruiser_coordinates)
+    assert_equal false, board.check_empty?(submarine_coordinates)
+  end
+
   def test_ship_place_method
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
@@ -103,12 +115,4 @@ class BoardTest < Minitest::Test
     assert_equal cell2.ship, cell3.ship
   end
 
-  def test_valid_placement_method_with_overlap_protection
-    board = Board.new
-    cruiser = Ship.new("Cruiser", 3)
-    submarine = Ship.new("Submarine", 2)
-    board.place(cruiser, ["A1", "A2", "A3"])
-
-    assert_equal false, board.valid_placement?(submarine, ["A1, B1"])
-  end
 end
