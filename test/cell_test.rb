@@ -72,4 +72,17 @@ class CellTest < Minitest::Test
     assert_equal "M", cell.render
   end
 
+  def test_render_method_with_ship
+    coordinate = "A1"
+    cell = Cell.new(coordinate)
+    cruiser = Ship.new("cruiser", 3)
+    cell.place_ship(cruiser)
+
+    assert_equal ".", cell.render
+
+    cell.fire_upon
+
+    assert_equal "H", cell.render
+  end
+
 end
