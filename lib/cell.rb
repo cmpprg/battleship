@@ -24,15 +24,19 @@ class Cell
     @ship.hit unless empty?
   end
 
-  def render
+  def render(is_player = false)
     if !empty?
-      return "." unless fired_upon?
-      "H"
-    elsif empty?
+      if is_player
+        return "S" unless fired_upon?
+        "H"
+      else
+        return "." unless fired_upon?
+        "H"
+      end
+    else
       return "." unless fired_upon?
       "M"
     end
-
   end
 
 
