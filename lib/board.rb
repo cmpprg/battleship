@@ -43,12 +43,12 @@ class Board
 
   def horizontal_numbers?(coordinates)
     number = (1..4).to_a
-    num = number.each_cons(coordinates.length).to_a
+    all_numbers = number.each_cons(coordinates.length).to_a
     new_coords = coordinates.map do |coord|
       coord[1].to_i
     end
-    num.any? do |n|
-      n.eql?(new_coords)
+    all_numbers.any? do |num|
+      num.eql?(new_coords)
     end
   end
 
