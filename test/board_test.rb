@@ -120,9 +120,30 @@ class BoardTest < Minitest::Test
     cruiser = Ship.new("Cruiser", 3)
     board.place(cruiser, ["A1", "A2", "A3"])
     submarine = Ship.new("Submarine", 2)
-
     assert_equal false, board.valid_placement?(submarine, ["A1", "B1"])
+  end
 
+  def test_boards_render_method
+    skip
+    board = Board.new
+    cruiser = Ship.new("Cruiser", 3)
+    board.place(cruiser, ["A1", "A2", "A3"])
+
+    expected =  "  1 2 3 4 \n" +
+                "A . . . . \n" +
+                "B . . . . \n" +
+                "C . . . . \n" +
+                "D . . . . \n"
+
+    assert_equal expected, board.render
+
+    player_expected = "  1 2 3 4 \n" +
+                      "A S S S . \n" +
+                      "B . . . . \n" +
+                      "C . . . . \n" +
+                      "D . . . . \n"
+
+    assert_equal player_expected, board.render(true)
   end
 
 end
