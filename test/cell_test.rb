@@ -95,6 +95,18 @@ class CellTest < Minitest::Test
 
     cell.fire_upon
 
-    assert_equal "H", cell.render(true) 
+    assert_equal "H", cell.render(true)
+  end
+
+  def test_render_method_if_ship_sunk?
+    coordinate = "A1"
+    cell = Cell.new(coordinate)
+    cruiser = Ship.new("cruiser", 3)
+    cell.place_ship(cruiser)
+    cell.fire_upon
+    cell.fire_upon
+    cell.fire_upon
+    
+    assert_equal "X", cell.render
   end
 end

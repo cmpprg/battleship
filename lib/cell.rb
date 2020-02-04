@@ -25,7 +25,9 @@ class Cell
   end
 
   def render(is_player = false)
-    if !empty?
+    if !empty? && @ship.sunk?
+      "X"
+    elsif !empty?
       if is_player
         return "S" unless fired_upon?
         "H"
@@ -38,6 +40,5 @@ class Cell
       "M"
     end
   end
-
 
 end
