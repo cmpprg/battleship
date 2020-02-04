@@ -46,18 +46,18 @@ class BoardTest < Minitest::Test
     assert_equal true, board.valid_placement?(cruiser, ["C2", "C3", "C4"])
   end
 
-  # def test_coordinates_given_are_consecutive
-  #   board = Board.new
-  #   cruiser = Ship.new("Cruiser", 3)
-  #   submarine = Ship.new("Submarine", 2)
-  #
-  #   assert_equal false, board.valid_placement?(cruiser, ["A1", "A2", "A4"])
-  #   assert_equal false, board.valid_placement?(submarine, ["A1", "C1"])
-  #   assert_equal false, board.valid_placement?(cruiser, ["A3", "A2", "A1"])
-  #   assert_equal false, board.valid_placement?(submarine, ["C1", "B1"])
-  #   assert_equal true, board.valid_placement?(cruiser, ["A1", "B1", "C1"])
-  #   assert_equal true, board.valid_placement?(submarine, ["D3", "D4"])
-  # end
+  def test_coordinates_given_are_consecutive
+    board = Board.new
+    cruiser = Ship.new("Cruiser", 3)
+    submarine = Ship.new("Submarine", 2)
+
+    assert_equal false, board.valid_placement?(cruiser, ["A1", "A2", "A4"])
+    assert_equal false, board.valid_placement?(submarine, ["A1", "C1"])
+    assert_equal false, board.valid_placement?(cruiser, ["A3", "A2", "A1"])
+    assert_equal false, board.valid_placement?(submarine, ["C1", "B1"])
+    assert_equal true, board.valid_placement?(cruiser, ["A1", "B1", "C1"])
+    assert_equal true, board.valid_placement?(submarine, ["D3", "D4"])
+  end
 
   def test_horizontal_letters
     board = Board.new
@@ -75,5 +75,23 @@ class BoardTest < Minitest::Test
     assert_equal true, board.horizontal_numbers?(["B1", "B2", "B3"])
     assert_equal false, board.horizontal_numbers?(["D3", "C2"])
     assert_equal true, board.horizontal_numbers?(["C2", "C3"])
+  end
+
+  def test_vertical_numbers
+    board = Board.new
+
+    assert_equal false, board.vertical_numbers?(["A1", "A2", "A4"])
+    assert_equal true, board.vertical_numbers?(["A4", "B4", "C4"])
+    assert_equal false, board.vertical_numbers?(["C3", "D4"])
+    assert_equal true, board.vertical_numbers?(["B2", "C2"])
+  end
+
+  def test_vertical_letters
+    board = Board.new
+
+    assert_equal false, board.vertical_letters?(["A1", "A2", "B2"])
+    assert_equal true, board.vertical_letters?(["B2", "C2", "D2"])
+    assert_equal false, board.vertical_letters?(["D1", "D3"])
+    assert_equal true, board.vertical_letters?(["B1", "C1"])
   end
 end

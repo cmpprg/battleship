@@ -35,7 +35,11 @@ class Board
   end
 
   def consecutive?(ship, coordinates)
+    horizontal?(coordinates) ^ vertical?(coordinates)
+  end
 
+  def horizontal?(coordinates)
+    horizontal_letters?(coordinates) && horizontal_numbers?(coordinates)
   end
 
   def horizontal_letters?(coordinates)
@@ -53,6 +57,28 @@ class Board
     end
     num.any? do |n|
       n.eql?(new_coords)
+    end
+  end
+
+  def vertical?(coordinates)
+    vertical_numbers?(coordinates) && vertical_letters?(coordinates)
+  end
+
+  def vertical_numbers?(coordinates)
+    numbers = coordinates.map do |coord|
+      coord[1]
+    end
+    numbers.uniq.length == 1
+  end
+
+  def vertical_letters?(coordinates)
+    coords = ("A".."D").to_a
+    new_coord = coords.each_cons(coordinates.length).to_a
+    letters = coordinates.map do |coord|
+      coord[0]
+    end
+    new_coord.any? do |new|
+      new.eql?(letters)
     end
   end
 end
