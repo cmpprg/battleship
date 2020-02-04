@@ -40,6 +40,7 @@ class BoardTest < Minitest::Test
     assert_equal false, board.valid_placement?(submarine, ["C1", "B1"])
     assert_equal true, board.valid_placement?(cruiser, ["A1", "B1", "C1"])
     assert_equal true, board.valid_placement?(submarine, ["D3", "D4"])
+    assert_equal false, board.valid_placement?(cruiser, ["A1", "B2", "C3"])
   end
 
   def test_coordinates_given_are_same_length_as_ship
@@ -86,5 +87,20 @@ class BoardTest < Minitest::Test
     assert_equal true, board.vertical_letters?(["B2", "C2", "D2"])
     assert_equal false, board.vertical_letters?(["D1", "D3"])
     assert_equal true, board.vertical_letters?(["B1", "C1"])
+  end
+
+  def test_ship_place_method
+    board = Board.new
+    cruiser = Ship.new("Cruiser", 3)
+    coordinates = ["A1", "A2", "A3"]
+    cell1 = board.cells["A1"]
+    cell2 = board.cells["A2"]
+    cell3 = board.cells["A3"]
+
+    board.place(cruiser, coordinates)
+
+    assert_equal cruiser, cell1.ship
+    assert_equal cruiser, cell2.ship
+    assert_equal cell2.ship, cell3.ship
   end
 end
