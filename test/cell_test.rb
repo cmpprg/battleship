@@ -37,4 +37,11 @@ class CellTest < Minitest::Test
     assert_equal false, cell.empty?
   end
 
+  def test_fired_upon_method
+    coordinate = "A1"
+    cell = Cell.new(coordinate)
+
+    assert_equal false, cell.fired_upon?
+  end
+
 end
