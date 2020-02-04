@@ -146,4 +146,25 @@ class BoardTest < Minitest::Test
     assert_equal player_expected, board.render(true)
   end
 
+  def test_render_method_can_take_a_hit
+    board = Board.new
+    cruiser = Ship.new("Cruiser", 3)
+    board.place(cruiser, ["A1", "A2", "A3"])
+    submarine = Ship.new("Submarine", 2)
+    board.place(submarine, ["C3", "D3"])
+
+    player_expected = "  1 2 3 4 \n" +
+                      "A H S S . \n" +
+                      "B . M . . \n" +
+                      "C . . X . \n" +
+                      "D . . X . \n"
+
+    board.cells["A1"].fire_upon
+    board.cells["B2"].fire_upon
+    board.cells["C3"].fire_upon
+    board.cells["D3"].fire_upon
+
+    assert_equal player_expected, board.render(true)
+  end
+
 end
