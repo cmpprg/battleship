@@ -27,15 +27,7 @@ class Board
   end
 
   def valid_placement?(ship, coordinates)
-    same_length?(ship, coordinates)
-  end
-
-  def same_length?(ship, coordinates)
-    ship.length == coordinates.length
-  end
-
-  def consecutive?(ship, coordinates)
-    horizontal?(coordinates) ^ vertical?(coordinates)
+    (ship.length == coordinates.length) && (horizontal?(coordinates) ^ vertical?(coordinates))
   end
 
   def horizontal?(coordinates)

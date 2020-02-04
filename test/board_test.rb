@@ -29,24 +29,7 @@ class BoardTest < Minitest::Test
     assert_equal false, board.valid_coordinate?("A22")
   end
 
-  # def test_it_can_validate_placement
-  #   board = Board.new
-  #   cruiser = Ship.new("Cruiser", 3)
-  #   submarine = Ship.new("Submarine", 2)
-  #
-  # end
-
-  def test_coordinates_given_are_same_length_as_ship
-    board = Board.new
-    cruiser = Ship.new("Cruiser", 3)
-    submarine = Ship.new("Submarine", 2)
-
-    assert_equal false, board.valid_placement?(cruiser, ["A1", "A2"])
-    assert_equal false, board.valid_placement?(submarine, ["A2", "A3", "A4"])
-    assert_equal true, board.valid_placement?(cruiser, ["C2", "C3", "C4"])
-  end
-
-  def test_coordinates_given_are_consecutive
+  def test_it_can_validate_placement
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
     submarine = Ship.new("Submarine", 2)
@@ -57,6 +40,16 @@ class BoardTest < Minitest::Test
     assert_equal false, board.valid_placement?(submarine, ["C1", "B1"])
     assert_equal true, board.valid_placement?(cruiser, ["A1", "B1", "C1"])
     assert_equal true, board.valid_placement?(submarine, ["D3", "D4"])
+  end
+
+  def test_coordinates_given_are_same_length_as_ship
+    board = Board.new
+    cruiser = Ship.new("Cruiser", 3)
+    submarine = Ship.new("Submarine", 2)
+
+    assert_equal false, board.valid_placement?(cruiser, ["A1", "A2"])
+    assert_equal false, board.valid_placement?(submarine, ["A2", "A3", "A4"])
+    assert_equal true, board.valid_placement?(cruiser, ["C2", "C3", "C4"])
   end
 
   def test_horizontal_letters
