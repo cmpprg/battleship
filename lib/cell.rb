@@ -22,7 +22,13 @@ class Cell
   def fire_upon
     @fired_upon = true
     @ship.hit unless empty?
+  end
+
+  def render
+    return "." unless fired_upon?
+    "M"
 
   end
+
 
 end

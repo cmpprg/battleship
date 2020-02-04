@@ -61,4 +61,15 @@ class CellTest < Minitest::Test
     assert_equal true, cell.fired_upon?
   end
 
+  def test_render_method_no_ship
+    coordinate = "A1"
+    cell = Cell.new(coordinate)
+
+    assert_equal ".", cell.render
+
+    cell.fire_upon
+
+    assert_equal "M", cell.render
+  end
+
 end
