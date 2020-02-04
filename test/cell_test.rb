@@ -1,6 +1,7 @@
 require "minitest/autorun"
 require "minitest/pride"
 require "./lib/cell"
+require "./lib/ship"
 
 class CellTest < Minitest::Test
 
@@ -24,6 +25,16 @@ class CellTest < Minitest::Test
     cell = Cell.new(coordinate)
 
     assert_equal true, cell.empty?
+  end
+
+  def test_place_ship_method
+    coordinate = "A1"
+    cell = Cell.new(coordinate)
+    cruiser = Ship.new("cruiser", 3)
+    cell.place_ship(cruiser)
+
+    assert_equal cruiser, cell.ship
+    assert_equal false, cell.empty?
   end
 
 end
