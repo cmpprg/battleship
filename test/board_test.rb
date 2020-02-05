@@ -87,4 +87,86 @@ class BoardTest < Minitest::Test
     assert_equal false, board.vertical_letters?(["D1", "D3"])
     assert_equal true, board.vertical_letters?(["B1", "C1"])
   end
+
+  def test_check_empty_method
+    board = Board.new
+    cruiser = Ship.new("Cruiser", 3)
+    submarine = Ship.new("Submarine", 2)
+    cruiser_coordinates = ["A1", "A2", "A3"]
+    submarine_coordinates = ["A1", "B1"]
+
+    assert_equal true, board.check_empty?(cruiser_coordinates)
+    board.place(cruiser, cruiser_coordinates)
+    assert_equal false, board.check_empty?(submarine_coordinates)
+  end
+
+  def test_ship_place_method
+    board = Board.new
+    cruiser = Ship.new("Cruiser", 3)
+    coordinates = ["A1", "A2", "A3"]
+    cell1 = board.cells["A1"]
+    cell2 = board.cells["A2"]
+    cell3 = board.cells["A3"]
+
+    board.place(cruiser, coordinates)
+
+    assert_equal cruiser, cell1.ship
+    assert_equal cruiser, cell2.ship
+    assert_equal cell2.ship, cell3.ship
+  end
+
+  def test_valid_placement_against_overlapping_ships
+    board = Board.new
+    cruiser = Ship.new("Cruiser", 3)
+    board.place(cruiser, ["A1", "A2", "A3"])
+    submarine = Ship.new("Submarine", 2)
+    assert_equal false, board.valid_placement?(submarine, ["A1", "B1"])
+  end
+
+  def test_boards_render_method
+    
+    board = Board.new
+    cruiser = Ship.new("Cruiser", 3)
+    board.place(cruiser, ["A1", "A2", "A3"])
+
+    expected =  "  1 2 3 4 \n" +
+                "A . . . . \n" +
+                "B . . . . \n" +
+                "C . . . . \n" +
+                "D . . . . \n"
+
+    assert_equal expected, board.render
+
+    player_expected = "  1 2 3 4 \n" +
+                      "A S S S . \n" +
+                      "B . . . . \n" +
+                      "C . . . . \n" +
+                      "D . . . . \n"
+
+
+    assert_equal player_expected, board.render(true)
+  end
+
+  def test_render_method_can_take_a_hit
+    board = Board.new
+    cruiser = Ship.new("Cruiser", 3)
+    board.place(cruiser, ["A1", "A2", "A3"])
+    submarine = Ship.new("Submarine", 2)
+    board.place(submarine, ["C3", "D3"])
+
+    player_expected = "  1 2 3 4 \n" +
+                      "A H S S . \n" +
+                      "B . M . . \n" +
+                      "C . . X . \n" +
+                      "D . . X . \n"
+
+
+    board.cells["A1"].fire_upon
+    board.cells["B2"].fire_upon
+    board.cells["C3"].fire_upon
+    board.cells["D3"].fire_upon
+
+    assert_equal player_expected, board.render(true)
+  end
+
 end

@@ -27,7 +27,7 @@ class Board
   end
 
   def valid_placement?(ship, coordinates)
-    (ship.length == coordinates.length) && (horizontal?(coordinates) ^ vertical?(coordinates))
+    check_empty?(coordinates) && (ship.length == coordinates.length) && (horizontal?(coordinates) ^ vertical?(coordinates))
   end
 
   def horizontal?(coordinates)
@@ -73,4 +73,33 @@ class Board
       new.eql?(letters)
     end
   end
+
+  def check_empty?(coordinates)
+    coordinates.all? do |coord|
+      @cells[coord].empty?
+    end
+
+  end
+
+  def place(ship, coordinates)
+    coordinates.each do |cell|
+      cells[cell].place_ship(ship)
+    end
+  end
+
+  def render(is_player = false)
+# """  1 2 3 4
+# A #{cells["A1"].render(is_player)} #{cells["A2"].render(is_player)} #{cells["A3"].render(is_player)} #{cells["A4"].render(is_player)}
+# B #{cells["B1"].render(is_player)} #{cells["B2"].render(is_player)} #{cells["B3"].render(is_player)} #{cells["B4"].render(is_player)}
+# C #{cells["C1"].render(is_player)} #{cells["C2"].render(is_player)} #{cells["C3"].render(is_player)} #{cells["C4"].render(is_player)}
+# D #{cells["D1"].render(is_player)} #{cells["D2"].render(is_player)} #{cells["D3"].render(is_player)} #{cells["D4"].render(is_player)}
+# """
+"  1 2 3 4 \n" +
+"A #{cells["A1"].render(is_player)} #{cells["A2"].render(is_player)} #{cells["A3"].render(is_player)} #{cells["A4"].render(is_player)} \n" +
+"B #{cells["B1"].render(is_player)} #{cells["B2"].render(is_player)} #{cells["B3"].render(is_player)} #{cells["B4"].render(is_player)} \n" +
+"C #{cells["C1"].render(is_player)} #{cells["C2"].render(is_player)} #{cells["C3"].render(is_player)} #{cells["C4"].render(is_player)} \n" +
+"D #{cells["D1"].render(is_player)} #{cells["D2"].render(is_player)} #{cells["D3"].render(is_player)} #{cells["D4"].render(is_player)} \n"
+
+  end
+
 end
