@@ -124,7 +124,7 @@ class BoardTest < Minitest::Test
   end
 
   def test_boards_render_method
-    skip
+    
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
     board.place(cruiser, ["A1", "A2", "A3"])
@@ -143,6 +143,7 @@ class BoardTest < Minitest::Test
                       "C . . . . \n" +
                       "D . . . . \n"
 
+
     assert_equal player_expected, board.render(true)
   end
 
@@ -158,6 +159,7 @@ class BoardTest < Minitest::Test
                       "B . M . . \n" +
                       "C . . X . \n" +
                       "D . . X . \n"
+
 
     board.cells["A1"].fire_upon
     board.cells["B2"].fire_upon
