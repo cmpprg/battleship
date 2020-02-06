@@ -27,15 +27,6 @@ class ComputerPlacementTest < Minitest::Test
     computer_placement = ComputerPlacement.new(board)
     cruiser = Ship.new("Cruiser", 3)
 
-    # computer_placement = mock
-    # computer_placement.stubs(:coordinates).returns(["A1", "A2", "A3"])
-
-    # expected = "  1 2 3 4 \n" +
-    #            "A S S S . \n" +
-    #            "B . . . . \n" +
-    #            "C . . . . \n" +
-    #            "D . . . . \n"
-
     computer_placement.stubs(:choice).returns(["A1", "A2", "A3"])
   end
 
@@ -43,8 +34,10 @@ class ComputerPlacementTest < Minitest::Test
     board = Board.new
     computer_placement = ComputerPlacement.new(board)
     cruiser = Ship.new("Cruiser", 3)
+    submarine = Ship.new("Submarine", 2)
 
     assert_equal true, computer_placement.validate?(cruiser)
+    assert_equal true, computer_placement.validate?(submarine)
   end
 
   def test_it_can_return_total_potentials
