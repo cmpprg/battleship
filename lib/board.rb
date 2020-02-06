@@ -94,7 +94,7 @@ class Board
 # C #{cells["C1"].render(is_player)} #{cells["C2"].render(is_player)} #{cells["C3"].render(is_player)} #{cells["C4"].render(is_player)}
 # D #{cells["D1"].render(is_player)} #{cells["D2"].render(is_player)} #{cells["D3"].render(is_player)} #{cells["D4"].render(is_player)}
 # """
-"  1 2 3 4 \n" +
+    puts "  1 2 3 4 \n" +
 "A #{cells["A1"].render(is_player)} #{cells["A2"].render(is_player)} #{cells["A3"].render(is_player)} #{cells["A4"].render(is_player)} \n" +
 "B #{cells["B1"].render(is_player)} #{cells["B2"].render(is_player)} #{cells["B3"].render(is_player)} #{cells["B4"].render(is_player)} \n" +
 "C #{cells["C1"].render(is_player)} #{cells["C2"].render(is_player)} #{cells["C3"].render(is_player)} #{cells["C4"].render(is_player)} \n" +

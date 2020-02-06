@@ -9,5 +9,6 @@ cruiser = Ship.new("Cruiser", 3)
 battleship = Battleship.new
 computer_placement = ComputerPlacement.new(computer_board)
 
-computer_placement.total_potentials(cruiser)
-computer_placement.validate?(cruiser)
+
+computer_placement.choice(cruiser)
+computer_board.render(true)

@@ -7,6 +7,7 @@ class ComputerPlacement
   end
 
   def choice(ship)
+    validate?(ship)
     @board.place(ship, @coordinates)
   end
 
