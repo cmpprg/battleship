@@ -1,21 +1,29 @@
 require_relative 'setup'
 class Turn
-  setup = Setup.new
 
-  setup.computer_setup
-  setup.player_setup
+  def initialize
+    @setup = Setup.new
+  end
 
-  puts "=============COMPUTER BOARD============="
+  def start_game
+    @setup.computer_setup
+    @setup.player_setup
+    playing_the_game
+  end
 
-  puts setup.computer_board.render
+  def playing_the_game
+    puts "=============COMPUTER BOARD============="
 
-  puts "==============PLAYER BOARD=============="
+    puts @setup.computer_board.render
 
-  puts setup.player_board.render(true)
+    puts "==============PLAYER BOARD=============="
 
-  puts "Enter the coordinate for your shot:"
+    puts @setup.player_board.render(true)
 
-  shot_coord = setup.gather_input
+    puts "Enter the coordinate for your shot:"
+
+    shot_coord = @setup.gather_input
+  end
 
   #check valid coordinate
 
