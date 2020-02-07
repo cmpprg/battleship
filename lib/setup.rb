@@ -60,7 +60,6 @@ class Setup
     true
   end
 
-
   def computer_setup
     computer_placement = ComputerPlacement.new(@computer_board)
     computer_placement.choice(@computer_cruiser)
@@ -83,6 +82,6 @@ class Setup
 
   def gather_input
     print ">> "
-    x = gets.chomp
+    gets.chomp
   end
 end
