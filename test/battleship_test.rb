@@ -1,7 +1,6 @@
 require "minitest/autorun"
 require "minitest/pride"
 require "./lib/battleship"
-require "o_stream_catcher"
 
 class BattleshipTest < Minitest::Test
   def setup
@@ -17,15 +16,20 @@ class BattleshipTest < Minitest::Test
     assert_instance_of Ship, @battleship.cruiser
     assert_instance_of Board, @battleship.computer_board
     assert_instance_of Board, @battleship.player_board
-    assert_instance_of String, @battleship.user_input
-  end
-
-  def test_user_input_method
-    puts "Please type in whatever you like."
-    assert_equal @battleship.gather_input, @battleship.user_input
   end
 
   def test_welcome_method
-    
+    #come back and figure out how to test this method.
   end
+
+  def test_computer_setup_method
+    assert_equal "I have laid out my ships on the grid", @battleship.computer_setup
+    assert_equal 3, @battleship.computer_board.cells.values.count { |cell| cell.ship == @battleship.cruiser }
+    assert_equal 2, @battleship.computer_board.cells.values.count { |cell| cell.ship == @battleship.submarine }
+  end
+
+  def test_cell_verfication_method
+  end
+
+  
 end
