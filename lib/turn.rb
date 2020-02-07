@@ -8,10 +8,10 @@ class Turn
   def start_game
     @setup.computer_setup
     @setup.player_setup
-    playing_the_game
+    take_turn
   end
 
-  def playing_the_game
+  def take_turn
     puts "=============COMPUTER BOARD============="
 
     puts @setup.computer_board.render
@@ -27,29 +27,47 @@ class Turn
   end
 
   def shot_implementation
+    player = player_shot_implementation
+    computer = computer_shot_implementation
+    shot_results(player, computer)
+  end
+
+  def player_shot_implementation
     shot_coord = @setup.gather_input.upcase
-    validate_coordinate_exists?(shot_coord)
-    validate_cell_fired_upon?(shot_coord)
-    puts "the end"
+    until @setup.computer_board.valid_coordinate?(shot_coord) && !@setup.computer_board.cells[shot_coord].fired_upon?
+      puts "Invalid coordinate, please enter another coordinate: "
+      shot_coord = @setup.gather_input.upcase
+    end
+    @setup.computer_board.cells[shot_coord].fire_upon
+    shot_coord
   end
 
-  def validate_coordinate_exists?(coordinate)
-    if !@setup.computer_board.valid_coordinate?(coordinate)
-      puts "Coordinate does not exist on the board, please enter another coordinate: "
-      return shot_implementation
+  def computer_shot_implementation
+    comp_shot = @setup.player_board.cells.keys.sample
+    until !@setup.player_board.cells[comp_shot].fired_upon?
+      comp_shot = @setup.player_board.cells.keys.sample
     end
-    puts "valid coordinate"
+    @setup.player_board.cells[comp_shot].fire_upon
+    comp_shot
   end
 
-  def validate_cell_fired_upon?(coordinate)
-    if @setup.computer_board.cells[coordinate].fired_upon?
-      puts "Coordinate has already been fired upon, please enter another coordinate: "
-      return shot_implementation
+  def print_cell_results(render)
+    if render == "M"
+      "miss"
+    elsif render == "H"
+      "hit"
+    else
+      "sunk"
     end
-    puts "not fired upon"
-    @setup.computer_board.cells[coordinate].fire_upon
-    puts @setup.computer_board.render(true)
   end
+
+  def shot_results(player, computer)
+    player_render = print_cell_results(@setup.computer_board.cells[player].render)
+    computer_render = print_cell_results(@setup.player_board.cells[computer].render)
+    puts "Your shot on #{player} was a #{player_render}."
+    puts "My shot on #{computer} was a #{computer_render}."
+  end
+
   #fire_upon a cell, both player and computer
 
   # puts "Your shot on A CELL was a ----.
