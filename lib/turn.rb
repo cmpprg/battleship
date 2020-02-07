@@ -22,16 +22,34 @@ class Turn
 
     puts "Enter the coordinate for your shot:"
 
-    shot_coord = @setup.gather_input
+    shot_implementation
 
-    if !@setup.computer_board.valid_coordinate?(shot_coord)
-      puts "Please enter a valid coordinate:"
-      @setup.computer_board.valid_coordinate?(shot_coord)
-    else
-      true
-    end
   end
 
+  def shot_implementation
+    shot_coord = @setup.gather_input.upcase
+    validate_coordinate_exists?(shot_coord)
+    validate_cell_fired_upon?(shot_coord)
+    puts "the end"
+  end
+
+  def validate_coordinate_exists?(coordinate)
+    if !@setup.computer_board.valid_coordinate?(coordinate)
+      puts "Coordinate does not exist on the board, please enter another coordinate: "
+      return shot_implementation
+    end
+    puts "valid coordinate"
+  end
+
+  def validate_cell_fired_upon?(coordinate)
+    if @setup.computer_board.cells[coordinate].fired_upon?
+      puts "Coordinate has already been fired upon, please enter another coordinate: "
+      return shot_implementation
+    end
+    puts "not fired upon"
+    @setup.computer_board.cells[coordinate].fire_upon
+    puts @setup.computer_board.render(true)
+  end
   #fire_upon a cell, both player and computer
 
   # puts "Your shot on A CELL was a ----.
