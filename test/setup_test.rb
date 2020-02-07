@@ -42,7 +42,9 @@ class SetupTest < Minitest::Test
   end
 
   def test_placement_verification_method
+    cruiser = Ship.new("Cruiser", 3)
     # set up test for placement verification method
+    assert @setup.placement_verification(cruiser, "A1 A2 A3")
   end
 
   def test_cell_input_method
