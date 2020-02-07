@@ -23,22 +23,25 @@ class Turn
     puts "Enter the coordinate for your shot:"
 
     shot_coord = @setup.gather_input
+
+    if !@setup.computer_board.valid_coordinate?(shot_coord)
+      puts "Please enter a valid coordinate:"
+      @setup.computer_board.valid_coordinate?(shot_coord)
+    else
+      true
+    end
   end
-
-  #check valid coordinate
-
-  puts "Please enter a valid coordinate:"
 
   #fire_upon a cell, both player and computer
 
-  puts "Your shot on A CELL was a ----.
-        My shot on A CELL was a ----."
-
-  #end game with
-
-  puts "I won!"
-
-  #or
-
-  puts "You won!"
+  # puts "Your shot on A CELL was a ----.
+  #       My shot on A CELL was a ----."
+  #
+  # #end game with
+  #
+  # puts "I won!"
+  #
+  # #or
+  #
+  # puts "You won!"
 end
