@@ -30,7 +30,7 @@ class Setup
 
     puts "Enter the squares for the Cruiser (3 spaces)"
     cell_input(@player_cruiser)
-    @player_board.render(true)
+    puts @player_board.render(true)
 
     puts "Enter the squares for the Submarine (2 spaces)"
     cell_input(@player_submarine)
@@ -38,14 +38,14 @@ class Setup
   end
 
   def cell_input(ship)
-    user_input = gather_input.split
+    user_input = gather_input.upcase.split
     cell_verification(ship, user_input)
     placement_verification(ship, user_input)
     @player_board.place(ship, user_input)
   end
 
   def placement_verification(ship, coordinates)
-    if !cell_verification(ship, coordinates)
+    if !@player_board.valid_placement?(ship, coordinates)
       puts "Those are invalid coordinates. Please try again:"
       cell_input(ship)
     end
