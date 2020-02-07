@@ -1,6 +1,7 @@
 require "minitest/autorun"
 require "minitest/pride"
 require "./lib/setup"
+require "mocha/minitest"
 
 class SetupTest < Minitest::Test
   def setup
@@ -31,9 +32,10 @@ class SetupTest < Minitest::Test
   def test_cell_verfication_method
     good_coordinates = "A2 A3 A4"
     bad_coordinates = "F1, A1, B2"
-
     assert_equal true, @setup.cell_verification(good_coordinates)
-    assert_equal false, @setup.cell_verification(bad_coordinates)
+
+    @setup = mock
+    @setup.stubs(:cell_verification).with(:bad_coordinates).returns(:cell_input)
   end
 
 

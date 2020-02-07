@@ -26,9 +26,7 @@ class Setup
     puts "The Cruiser is three units long and the Submarine is two units long."
     puts @player_board.render(true)
     puts "Enter the squares for the Cruiser (3 spaces)"
-    user_input = gather_input
-    cell_verification(user_input)
-    #verify valid cells, write error message if invalid
+    cell_input
     #verify valid placement, write error messages if invalid
     #place the ship at the coordinates given.
     #render board showing cruiser placed
@@ -41,8 +39,19 @@ class Setup
 
   end
 
+  
+
+  def cell_input
+    user_input = gather_input
+    cell_verification(user_input)
+  end
+
   def cell_verification(coordinates)
-    coordinates.split.all?{|coord| player_board.valid_coordinate?(coord)}
+    if !coordinates.split.all?{|coord| player_board.valid_coordinate?(coord)}
+      puts "Those are invalid coordinates. Please try again:"
+      cell_input
+    end
+    true
   end
 
   def computer_setup
