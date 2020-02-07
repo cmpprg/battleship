@@ -39,20 +39,20 @@ class Setup
 
   def cell_input(ship)
     user_input = gather_input.split
-    cell_verification(user_input)
+    cell_verification(ship, user_input)
     placement_verification(ship, user_input)
     @player_board.place(ship, user_input)
   end
 
   def placement_verification(ship, coordinates)
-    if !cell_verification(coordinates)
+    if !cell_verification(ship, coordinates)
       puts "Those are invalid coordinates. Please try again:"
       cell_input(ship)
     end
     true
   end
 
-  def cell_verification(coordinates)
+  def cell_verification(ship, coordinates)
     if !coordinates.all?{|coord| player_board.valid_coordinate?(coord)}
       puts "Those are invalid coordinates. Please try again:"
       cell_input(ship)
