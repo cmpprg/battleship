@@ -13,6 +13,7 @@ class Battleship
     return if input == "q"
     return play_game() if input == "p"
     puts "Incorrect input. Please try again"
+    welcome()
   end
 
   def play_game
