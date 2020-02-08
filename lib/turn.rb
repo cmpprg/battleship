@@ -7,9 +7,7 @@ class Turn
   end
 
   def start_game
-    #@setup.introduction TODO
-    @setup.computer_setup
-    @setup.player_setup
+    @setup.introduction_and_setup
     take_turn
   end
 
