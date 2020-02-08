@@ -87,6 +87,12 @@ class Board
     end
   end
 
+  def not_fired_upon
+    cells.find_all { |_coordinate, object| !object.fired_upon? }.to_h
+  end
+
+  # method to randomly grab a cell thats not been fired upon.
+
   def render(is_player = false)
 
     "  1 2 3 4 \n" +

@@ -124,7 +124,7 @@ class BoardTest < Minitest::Test
   end
 
   def test_boards_render_method
-    
+
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
     board.place(cruiser, ["A1", "A2", "A3"])
@@ -167,6 +167,23 @@ class BoardTest < Minitest::Test
     board.cells["D3"].fire_upon
 
     assert_equal player_expected, board.render(true)
+  end
+
+  def test_not_fired_upon_method
+    board = Board.new
+
+    assert_equal 16, board.not_fired_upon.length
+
+    board.cells["A1"].fire_upon
+    board.cells["D3"].fire_upon
+
+    assert_equal 14, board.not_fired_upon.length
+    assert_equal false, board.not_fired_upon.keys.include?("A1")
+    assert_equal false, board.not_fired_upon.keys.include?("D3")
+
+    board.cells
+
+
   end
 
 end
