@@ -182,8 +182,18 @@ class BoardTest < Minitest::Test
     assert_equal false, board.not_fired_upon.keys.include?("D3")
 
     board.cells
+  end
 
+  def test_coord_not_fired_upon
+    board = Board.new
+    coord = board.coord_not_fired_upon
 
+    assert board.not_fired_upon.keys.include?(coord)
+
+    board.cells[coord].fire_upon
+    coord2 = board.coord_not_fired_upon
+
+    assert board.not_fired_upon.keys.include?(coord2)
   end
 
 end
