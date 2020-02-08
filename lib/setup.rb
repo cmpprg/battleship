@@ -42,7 +42,7 @@ class Setup
     computer_placement.choice(@computer_submarine)
     "I have laid out my ships on the grid"
   end
-#NOT TESTED TODO
+#TEST COMPLETE
   def player_setup
     puts "You now need to lay out your two ships."
     puts "The Cruiser is three units long and the Submarine is two units long."
@@ -50,7 +50,6 @@ class Setup
     player_cruiser_setup
     puts @player_board.render(true)
     player_submarine_setup
-    "Great positions lets take our first turn."
   end
 #NOT TESTED TODO
   def player_cruiser_setup
@@ -94,7 +93,7 @@ class Setup
       true
     end
   end
-
+#DO NOT NEED TO TEST
   def quit_game
     abort("Okay Byeeeeeee...")
   end
