@@ -184,16 +184,23 @@ class BoardTest < Minitest::Test
     board.cells
   end
 
-  def test_coord_not_fired_upon
+  def test_coordinate_not_fired_upon_method
     board = Board.new
-    coord = board.coord_not_fired_upon
+    coord = board.coordinate_not_fired_upon
 
     assert board.not_fired_upon.keys.include?(coord)
 
     board.cells[coord].fire_upon
-    coord2 = board.coord_not_fired_upon
+    coord2 = board.coordinate_not_fired_upon
 
     assert board.not_fired_upon.keys.include?(coord2)
+  end
+
+  def test_that_it_can_fire_upon_a_cell
+    board = Board.new
+    board.fire_upon("A1")
+
+    assert board.cells["A1"].fired_upon?
   end
 
 end

@@ -91,8 +91,12 @@ class Board
     cells.find_all { |_coordinate, object| !object.fired_upon? }.to_h
   end
 
-  def coord_not_fired_upon
+  def coordinate_not_fired_upon
     not_fired_upon.keys.sample
+  end
+
+  def fire_upon(coordinate)
+    cells[coordinate].fire_upon
   end
 
   def render(is_player = false)
