@@ -69,33 +69,33 @@ class SetupTest < Minitest::Test
   end
 
   def test_player_setup_method
-    player_cruiser_setup_spy = Spy.on(@setup, :player_cruiser_setup)
-    player_submarine_setup_spy = Spy.on(@setup, :player_submarine_setup)
+    player_ship_setup_spy = Spy.on(@setup, :player_ship_setup)
+    render_board_spy = Spy.on(@setup.player_board, :render)
+    @setup.player_setup
 
-    assert_equal "Great positions lets take our first turn.", @setup.player_setup
-    assert player_cruiser_setup_spy.has_been_called?
-    assert player_submarine_setup_spy.has_been_called?
+    assert render_board_spy.has_been_called?
+    assert_equal 2, render_board_spy.calls.count
+    assert player_ship_setup_spy.has_been_called?
+    assert_equal 2, player_ship_setup_spy.calls.count
   end
 
-  def test_cell_verfication_method
-    good_coordinates = "A2 A3 A4"
-    bad_coordinates = "F1, A1, B2"
+  def test_player_ship_setup
+    ship = @setup.player_cruiser
+    cell_input_spy = Spy.on(@setup, :cell_input)
+    @setup.player_ship_setup(ship)
 
-    assert_equal true, @setup.cell_verification(@computer_cruiser, good_coordinates)
-
-    @setup = mock
-    @setup.stubs(:cell_verification).with(:bad_coordinates).returns(:cell_input)
-  end
-
-  def test_placement_verification_method
-    cruiser = Ship.new("Cruiser", 3)
-    # set up test for placement verification method
-    assert @setup.placement_verification(cruiser, "A1 A2 A3")
+    assert cell_input_spy.has_been_called?
   end
 
   def test_cell_input_method
-    # form integration test for method
+    ship = @setup.player_cruiser
+    gather_input_spy = Spy.on(@setup, :gather_input).and_return("a1 a2 a3")
+    @setup.cell_input(ship)
+
+    assert gather_input_spy.has_been_called?
+    assert_equal 3, @setup.player_board.cells.values.count{|object| object.ship == ship}
   end
 
+  def
 
 end
