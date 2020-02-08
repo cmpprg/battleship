@@ -19,7 +19,7 @@ class Setup
     puts computer_setup
     puts player_setup
   end
-#TEST COMPLETE 
+#TEST COMPLETE, SAME WITH THE PUTS IN THE TEST.
   def welcome_implement
     user_input = ""
     loop do
@@ -73,7 +73,8 @@ class Setup
   end
 #NOT TESTED TODO
   def coordinates_valid?(ship, coordinates)
-    cell_verification(ship, coordinates) && placement_verification(ship, coordinates)
+    cell_verification(ship, coordinates) &&
+    placement_verification(ship, coordinates)
   end
 #NOT TESED TODO
   def cell_verification(ship, coordinates)
