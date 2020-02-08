@@ -47,19 +47,14 @@ class Setup
     puts "You now need to lay out your two ships."
     puts "The Cruiser is three units long and the Submarine is two units long."
     puts @player_board.render(true)
-    player_cruiser_setup
+    player_ship_setup(@player_cruiser)
     puts @player_board.render(true)
-    player_submarine_setup
+    player_ship_setup(@player_submarine)
   end
 #NOT TESTED TODO
-  def player_cruiser_setup
-    puts "Enter the coordinates for the Cruiser (3 spaces)"
-    cell_input(@player_cruiser)
-  end
-#NOT TESTED TODO
-  def player_submarine_setup
-    puts "Enter the coordinates for the Submarine (2 spaces)"
-    cell_input(@player_submarine)
+  def player_ship_setup(ship)
+    puts "Enter the coordinates for the #{ship.name} (#{ship.length} spaces)"
+    cell_input(ship)
   end
 #NOT TESTED TODO
   def cell_input(ship)
