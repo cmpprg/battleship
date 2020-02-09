@@ -4,7 +4,9 @@ require_relative 'computer_placement'
 class Setup
   attr_reader :computer_cruiser, :computer_submarine, :computer_board,:player_cruiser, :player_submarine, :player_board
 
-  def initialize
+  #changed method name and manually initialized it in turn class
+  # to get a fresh set of everything for a restarted game
+  def initialize_new
     @player_cruiser = Ship.new("Cruiser", 3)
     @player_submarine = Ship.new("Submarine", 2)
     @computer_cruiser = Ship.new("Cruiser", 3)
@@ -40,24 +42,33 @@ class Setup
   def cell_input(ship)
     user_input = gather_input.upcase.split
     cell_verification(ship, user_input)
-    placement_verification(ship, user_input)
-    @player_board.place(ship, user_input)
+    # I also moved this method to cell_verification method
+    # placement_verification(ship, user_input)
+    #I removed this and placed into placement_verification
+    # @player_board.place(ship, user_input)
   end
 
   def placement_verification(ship, coordinates)
-    if !@player_board.valid_placement?(ship, coordinates)
+    #I switched the if statement and added the place method here
+    # this makes the empty? method work and not return a nil class error
+    # when you enter invalid coordinates
+    if @player_board.valid_placement?(ship, coordinates)
+      @player_board.place(ship, coordinates)
+    else
       puts "Those are invalid coordinates. Please try again:"
       cell_input(ship)
     end
-    true
   end
 
   def cell_verification(ship, coordinates)
-    if !coordinates.all?{|coord| player_board.valid_coordinate?(coord)}
+    #I switched this if statement around and here is calling the
+    # placement_verification method
+    if coordinates.all?{|coord| player_board.valid_coordinate?(coord)}
+      placement_verification(ship, coordinates)
+    else
       puts "Those are invalid coordinates. Please try again:"
       cell_input(ship)
     end
-    true
   end
 
   def computer_setup
