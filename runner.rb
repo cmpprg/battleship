@@ -1,5 +1,5 @@
-require './lib/battleship'
+require './lib/turn'
 
-battleship = Battleship.new
+turn = Turn.new
 
-battleship.start
+turn.start_game

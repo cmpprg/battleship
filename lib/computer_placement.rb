@@ -1,5 +1,7 @@
 class ComputerPlacement
 
+  attr_reader :board, :board_cells
+
   def initialize(board)
     @board = board
     @board_cells = @board.cells.keys
