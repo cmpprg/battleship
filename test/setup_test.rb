@@ -96,6 +96,46 @@ class SetupTest < Minitest::Test
     assert_equal 3, @setup.player_board.cells.values.count{|object| object.ship == ship}
   end
 
-  def
+  def test_coordinates_valid_method
+    cruiser = @setup.player_cruiser
+    good_coordinates = ["A1", "A2", "A3"]
+    not_enough_coordinates = ["A1", "B2"]
+    not_on_board_coordinates = ["A3", "A4", "A5"]
+
+    assert @setup.coordinates_valid?(cruiser, good_coordinates)
+    assert_equal false, @setup.coordinates_valid?(cruiser, not_enough_coordinates)
+    assert_equal false, @setup.coordinates_valid?(cruiser, not_on_board_coordinates)
+
+    submarine = @setup.player_submarine
+    overlap_coordinates = ["A2", "B2"]
+    @setup.player_board.place(cruiser, good_coordinates)
+
+    assert_equal false, @setup.coordinates_valid?(submarine, overlap_coordinates)
+  end
+
+  def test_cell_verification_method
+    cruiser = @setup.player_cruiser
+    good_coordinates = ["D1", "D2", "D3"]
+    bad_coordinates = ["Z1", "Z2"]
+
+    assert @setup.cell_verification?(cruiser, good_coordinates)
+    assert_equal false, @setup.cell_verification?(cruiser, bad_coordinates)
+  end
+
+  def test_placement_verification_method
+    cruiser = @setup.player_cruiser
+    good_coordinates = ["B1", "B2", "B3"]
+    diagonal_coordinates = ["A1", "B2", "B3"]
+
+    assert @setup.placement_verification?(cruiser, good_coordinates)
+    assert_equal false, @setup.placement_verification?(cruiser, diagonal_coordinates)
+
+    submarine = @setup.player_submarine
+    overlap_coordinates = ["A2", "B2"]
+    @setup.player_board.place(cruiser, good_coordinates)
+
+    assert_equal false, @setup.placement_verification?(cruiser, overlap_coordinates)
+
+  end
 
 end
