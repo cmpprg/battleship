@@ -126,10 +126,34 @@ class Turn
     if replay_input == "p"
       start_game
     elsif replay_input == "q"
-      return "Thank You! Please play again."
+      puts "Thank You! Please play again."
+      exit 0
     else
       puts "This is not an option, please enter a valid input."
       replay
     end
   end
+  #
+  # #Helper Method.  Fully atomic (can run completely on its own), takes in input, returns value to "help" its caller
+  # def addTwo(input)
+  #   return input + 2
+  # end
+  #
+  # # NOT a helper method, does not return a value to it's caller requesting "help"
+  # def someWork(thing)
+  #   var = addTwo(thing)
+  #   puts addTwo(var)
+  # end
+  #
+  # #Templater method (Not Helping its caller, no real or modified return value based on input)
+  # def messageConsole(message)
+  #   puts message
+  #   return true # this can denote success so that the calling method knows the template was sent
+  # end
+  #
+  # # Oddball, but still a helper, calling method gets console input returned
+  # def getConsoleInput()
+  #   return gets.chomp
+  # end
+
 end
