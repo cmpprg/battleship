@@ -87,6 +87,18 @@ class Board
     end
   end
 
+  def not_fired_upon
+    cells.find_all { |_coordinate, object| !object.fired_upon? }.to_h
+  end
+
+  def coordinate_not_fired_upon
+    not_fired_upon.keys.sample
+  end
+
+  def fire_upon(coordinate)
+    cells[coordinate].fire_upon
+  end
+
   def render(is_player = false)
 
     "  1 2 3 4 \n" +

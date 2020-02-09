@@ -124,7 +124,7 @@ class BoardTest < Minitest::Test
   end
 
   def test_boards_render_method
-    
+
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
     board.place(cruiser, ["A1", "A2", "A3"])
@@ -167,6 +167,40 @@ class BoardTest < Minitest::Test
     board.cells["D3"].fire_upon
 
     assert_equal player_expected, board.render(true)
+  end
+
+  def test_not_fired_upon_method
+    board = Board.new
+
+    assert_equal 16, board.not_fired_upon.length
+
+    board.cells["A1"].fire_upon
+    board.cells["D3"].fire_upon
+
+    assert_equal 14, board.not_fired_upon.length
+    assert_equal false, board.not_fired_upon.keys.include?("A1")
+    assert_equal false, board.not_fired_upon.keys.include?("D3")
+
+    board.cells
+  end
+
+  def test_coordinate_not_fired_upon_method
+    board = Board.new
+    coord = board.coordinate_not_fired_upon
+
+    assert board.not_fired_upon.keys.include?(coord)
+
+    board.cells[coord].fire_upon
+    coord2 = board.coordinate_not_fired_upon
+
+    assert board.not_fired_upon.keys.include?(coord2)
+  end
+
+  def test_that_it_can_fire_upon_a_cell
+    board = Board.new
+    board.fire_upon("A1")
+
+    assert board.cells["A1"].fired_upon?
   end
 
 end

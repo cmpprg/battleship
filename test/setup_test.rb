@@ -2,6 +2,7 @@ require "minitest/autorun"
 require "minitest/pride"
 require "./lib/setup"
 require "mocha/minitest"
+require "spy/integration"
 
 class SetupTest < Minitest::Test
   def setup
@@ -21,8 +22,44 @@ class SetupTest < Minitest::Test
     assert_instance_of Board, @setup.player_board
   end
 
-  def test_welcome_method
-    #come back and figure out how to test this method.
+  def test_introduction_and_setup_method
+    welcome_implement_spy = Spy.on(@setup, :welcome_implement)
+    computer_setup_spy = Spy.on(@setup, :computer_setup)
+    player_setup_spy = Spy.on(@setup, :player_setup)
+    @setup.introduction_and_setup
+
+    assert welcome_implement_spy.has_been_called?
+    assert computer_setup_spy.has_been_called?
+    assert player_setup_spy.has_been_called?
+  end
+
+  def test_welcome_implement_method_play
+    play_gather_input_spy = Spy.on(@setup, :gather_input).and_return("p")
+    @setup.welcome_implement
+
+    assert play_gather_input_spy.has_been_called?
+    assert @setup.valid_response?(@setup.gather_input)
+  end
+
+  def test_welcome_implement_method_quit
+    quit_gather_input_spy = Spy.on(@setup, :gather_input).and_return("q")
+    quit_game_spy = Spy.on(@setup, :quit_game)
+    @setup.welcome_implement
+
+    assert quit_gather_input_spy.has_been_called?
+    assert @setup.valid_response?(@setup.gather_input)
+    assert quit_game_spy.has_been_called?
+  end
+
+  def test_valid_response_method
+    play_game_input = "p"
+    quit_game_input = "q"
+    invalid_input = "$"
+
+
+    assert @setup.valid_response?(play_game_input)
+    assert @setup.valid_response?(quit_game_input)
+    assert_equal false, @setup.valid_response?(invalid_input)
   end
 
   def test_computer_setup_method
@@ -31,25 +68,74 @@ class SetupTest < Minitest::Test
     assert_equal 2, @setup.computer_board.cells.values.count { |cell| cell.ship == @setup.computer_submarine }
   end
 
-  def test_cell_verfication_method
-    good_coordinates = "A2 A3 A4"
-    bad_coordinates = "F1, A1, B2"
+  def test_player_setup_method
+    player_ship_setup_spy = Spy.on(@setup, :player_ship_setup)
+    render_board_spy = Spy.on(@setup.player_board, :render)
+    @setup.player_setup
 
-    assert_equal true, @setup.cell_verification(good_coordinates)
-
-    @setup = mock
-    @setup.stubs(:cell_verification).with(:bad_coordinates).returns(:cell_input)
+    assert render_board_spy.has_been_called?
+    assert_equal 2, render_board_spy.calls.count
+    assert player_ship_setup_spy.has_been_called?
+    assert_equal 2, player_ship_setup_spy.calls.count
   end
 
-  def test_placement_verification_method
-    cruiser = Ship.new("Cruiser", 3)
-    # set up test for placement verification method
-    assert @setup.placement_verification(cruiser, "A1 A2 A3")
+  def test_player_ship_setup
+    ship = @setup.player_cruiser
+    cell_input_spy = Spy.on(@setup, :cell_input)
+    @setup.player_ship_setup(ship)
+
+    assert cell_input_spy.has_been_called?
   end
 
   def test_cell_input_method
-    # form integration test for method
+    ship = @setup.player_cruiser
+    gather_input_spy = Spy.on(@setup, :gather_input).and_return("a1 a2 a3")
+    @setup.cell_input(ship)
+
+    assert gather_input_spy.has_been_called?
+    assert_equal 3, @setup.player_board.cells.values.count{|object| object.ship == ship}
   end
 
+  def test_coordinates_valid_method
+    cruiser = @setup.player_cruiser
+    good_coordinates = ["A1", "A2", "A3"]
+    not_enough_coordinates = ["A1", "B2"]
+    not_on_board_coordinates = ["A3", "A4", "A5"]
+
+    assert @setup.coordinates_valid?(cruiser, good_coordinates)
+    assert_equal false, @setup.coordinates_valid?(cruiser, not_enough_coordinates)
+    assert_equal false, @setup.coordinates_valid?(cruiser, not_on_board_coordinates)
+
+    submarine = @setup.player_submarine
+    overlap_coordinates = ["A2", "B2"]
+    @setup.player_board.place(cruiser, good_coordinates)
+
+    assert_equal false, @setup.coordinates_valid?(submarine, overlap_coordinates)
+  end
+
+  def test_cell_verification_method
+    cruiser = @setup.player_cruiser
+    good_coordinates = ["D1", "D2", "D3"]
+    bad_coordinates = ["Z1", "Z2"]
+
+    assert @setup.cell_verification?(cruiser, good_coordinates)
+    assert_equal false, @setup.cell_verification?(cruiser, bad_coordinates)
+  end
+
+  def test_placement_verification_method
+    cruiser = @setup.player_cruiser
+    good_coordinates = ["B1", "B2", "B3"]
+    diagonal_coordinates = ["A1", "B2", "B3"]
+
+    assert @setup.placement_verification?(cruiser, good_coordinates)
+    assert_equal false, @setup.placement_verification?(cruiser, diagonal_coordinates)
+
+    submarine = @setup.player_submarine
+    overlap_coordinates = ["A2", "B2"]
+    @setup.player_board.place(cruiser, good_coordinates)
+
+    assert_equal false, @setup.placement_verification?(cruiser, overlap_coordinates)
+
+  end
 
 end
