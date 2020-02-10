@@ -1,46 +1,63 @@
 require_relative 'setup'
 class Turn
 
-  attr_reader :setup
   def initialize
     @setup = Setup.new
   end
 
-  def start_game
-    @setup.introduction_and_setup
-    take_turn
+  def start(play)
+    puts "Welcome to BATTLESHIP"
+    while play
+      play = @setup.welcome?
+      if play
+        @setup.initialize_new
+        @setup.computer_setup
+        @setup.player_setup
+        game
+      end
+    end
   end
 
-  def take_turn
-    board_renders
-    puts "Enter the coordinate for your shot:"
-    player_shot_implementation
-    comp_shot_implementation
-    take_turn # if !end_game? TODO
+  def game
+    loop do
+      puts "=============COMPUTER BOARD============="
+
+      puts @setup.computer_board.render
+
+      puts "==============PLAYER BOARD=============="
+
+      puts @setup.player_board.render(true)
+
+      puts "Enter the coordinate for your shot:"
+
+      shot_implementation
+
+      break if player_game_over? || computer_game_over?
+    end
   end
 
-  def board_renders
-    puts "=============COMPUTER BOARD============="
+  def shot_implementation
+    player = fire_on_shot_implementation
+    computer = computer_shot_implementation
+    shot_results(player, computer)
+  end
 
-    puts @setup.computer_board.render
-
-    puts "==============PLAYER BOARD=============="
-
-    puts @setup.player_board.render(true)
+  def fire_on_shot_implementation
+    coordinate = player_shot_implementation
+    @setup.computer_board.fire_upon(coordinate)
+    coordinate
   end
 
   def player_shot_implementation
-    shot_coord = ""
     loop do
       shot_coord = @setup.gather_input.upcase
-      break if shot_valid?(shot_coord)
+      break shot_coord if shot_valid?(shot_coord)
     end
-    @setup.computer_board.fire_upon(shot_coord)
   end
 
-  def shot_valid?(coord)
-    validate_coordinate_exists?(coord) &&
-    validate_cell_fired_upon?(coord)
+  def shot_valid?(coordinate)
+    validate_coordinate_exists?(coordinate) &&
+        validate_cell_fired_upon?(coordinate)
   end
 
   def validate_coordinate_exists?(coordinate)
@@ -53,7 +70,7 @@ class Turn
   end
 
   def validate_cell_fired_upon?(coordinate)
-    if !@setup.computer_board.not_fired_upon.include?(coordinate)
+    if @setup.computer_board.cells[coordinate].fired_upon?
       puts "Coordinate has already been fired upon, please enter another coordinate: "
       false
     else
@@ -61,8 +78,53 @@ class Turn
     end
   end
 
-  def comp_shot_implementation
-    comp_shot = @setup.player_board.coordinate_not_fired_upon
+  def computer_shot_implementation
+    comp_shot = ""
+    loop do
+      comp_shot = @setup.player_board.coordinate_not_fired_upon
+      break if !@setup.player_board.cells[comp_shot].fired_upon?
+    end
     @setup.player_board.fire_upon(comp_shot)
+    comp_shot
   end
+
+  def print_cell_results(render)
+    return "was a miss" if render == "M"
+    return "was a hit" if render == "H"
+    "sunk a ship"
+  end
+
+  def shot_results(player, computer)
+    player_render = print_cell_results(@setup.computer_board.cells[player].render)
+    computer_render = print_cell_results(@setup.player_board.cells[computer].render)
+    puts "Your shot on #{player} #{player_render}."
+    puts "My shot on #{computer} #{computer_render}."
+  end
+
+  def player_game_over?
+    if @setup.computer_cruiser.sunk? && @setup.computer_submarine.sunk?
+      end_game(true, nil)
+      true
+    else
+      false
+    end
+  end
+
+  def computer_game_over?
+    if @setup.player_cruiser.sunk? && @setup.player_submarine.sunk?
+      end_game(nil, true)
+      true
+    else
+      false
+    end
+  end
+
+  def end_game(player_results, computer_results)
+    if player_results || !computer_results
+      puts "You won!"
+    else
+      puts "I won!"
+    end
+  end
+
 end
