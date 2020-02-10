@@ -4,7 +4,7 @@ require_relative 'computer_placement'
 class Setup
   attr_reader :computer_cruiser, :computer_submarine, :computer_board,:player_cruiser, :player_submarine, :player_board
 
-  def initialize
+  def initialize_new
     @player_cruiser = Ship.new("Cruiser", 3)
     @player_submarine = Ship.new("Submarine", 2)
     @computer_cruiser = Ship.new("Cruiser", 3)
@@ -13,21 +13,22 @@ class Setup
     @player_board = Board.new
   end
 
-  def introduction_and_setup
-    puts "Welcome to BATTLESHIP"
-    welcome_implement
-    puts computer_setup
-    puts player_setup
-  end
+  # def introduction_and_setup
+  #   puts "Welcome to BATTLESHIP"
+  #   welcome_implement
+  #   puts computer_setup
+  #   puts player_setup
+  # end
 
-  def welcome_implement
+  def welcome?
     user_input = ""
     loop do
       puts "Enter p to play. Enter q to quit"
       user_input = gather_input.downcase
       break if valid_response?(user_input)
     end
-    quit_game if user_input == "q"
+    return false if user_input == "q"
+    true
   end
 
   def valid_response?(response)
@@ -89,9 +90,9 @@ class Setup
     end
   end
 
-  def quit_game
-    abort("Okay Byeeeeeee...")
-  end
+  # def quit_game
+  #   abort("Okay Byeeeeeee...")
+  # end
 
   def gather_input
     print ">> "
