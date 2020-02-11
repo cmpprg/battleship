@@ -99,6 +99,10 @@ class Board
     cells[coordinate].fire_upon
   end
 
+  def fired_upon?(coordinate)
+    cells[coordinate].fired_upon?
+  end
+
   def render(is_player = false)
 
     "  1 2 3 4 \n" +
