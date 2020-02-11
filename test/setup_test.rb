@@ -7,6 +7,7 @@ require "spy/integration"
 class SetupTest < Minitest::Test
   def setup
     @setup = Setup.new
+    @setup.initialize_new
   end
 
   def test_it_exists
@@ -22,33 +23,21 @@ class SetupTest < Minitest::Test
     assert_instance_of Board, @setup.player_board
   end
 
-  def test_introduction_and_setup_method
-    welcome_implement_spy = Spy.on(@setup, :welcome_implement)
-    computer_setup_spy = Spy.on(@setup, :computer_setup)
-    player_setup_spy = Spy.on(@setup, :player_setup)
-    @setup.introduction_and_setup
-
-    assert welcome_implement_spy.has_been_called?
-    assert computer_setup_spy.has_been_called?
-    assert player_setup_spy.has_been_called?
-  end
-
-  def test_welcome_implement_method_play
+  def test_welcome_method_play
     play_gather_input_spy = Spy.on(@setup, :gather_input).and_return("p")
-    @setup.welcome_implement
+    @setup.welcome?
 
-    assert play_gather_input_spy.has_been_called?
     assert @setup.valid_response?(@setup.gather_input)
+    assert @setup.welcome?
+
   end
 
-  def test_welcome_implement_method_quit
+  def test_welcome_method_quit
     quit_gather_input_spy = Spy.on(@setup, :gather_input).and_return("q")
-    quit_game_spy = Spy.on(@setup, :quit_game)
-    @setup.welcome_implement
+    @setup.welcome?
 
-    assert quit_gather_input_spy.has_been_called?
     assert @setup.valid_response?(@setup.gather_input)
-    assert quit_game_spy.has_been_called?
+    assert_equal false, @setup.welcome?
   end
 
   def test_valid_response_method

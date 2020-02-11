@@ -13,13 +13,6 @@ class Setup
     @player_board = Board.new
   end
 
-  # def introduction_and_setup
-  #   puts "Welcome to BATTLESHIP"
-  #   welcome_implement
-  #   puts computer_setup
-  #   puts player_setup
-  # end
-
   def welcome?
     user_input = ""
     loop do
@@ -89,10 +82,6 @@ class Setup
       true
     end
   end
-
-  # def quit_game
-  #   abort("Okay Byeeeeeee...")
-  # end
 
   def gather_input
     print ">> "

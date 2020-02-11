@@ -203,4 +203,13 @@ class BoardTest < Minitest::Test
     assert board.cells["A1"].fired_upon?
   end
 
+  def test_if_a_cell_has_been_fired_upon
+    board = Board.new
+
+    assert_equal false, board.fired_upon?("A1")
+
+    board.fire_upon("A1")
+
+    assert board.fired_upon?("A1")
+  end
 end
