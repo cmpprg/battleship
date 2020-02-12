@@ -24,4 +24,11 @@ class CellGeneratorTest < Minitest::Test
     assert_equal "FBO", cell_generator2.last_letter
   end
 
+  def test_it_can_produce_a_range_of_letters_based_on_height
+    cell_generator1 = CellGenerator.new(27, 4)
+    cell_generator2 = CellGenerator.new(4123, 4)
+    assert_equal ("A".."AA").to_a, cell_generator1.generate_letters_range
+    assert_equal ("A".."FBO").to_a, cell_generator2.generate_letters_range
+  end
+
 end

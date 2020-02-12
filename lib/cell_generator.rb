@@ -17,7 +17,11 @@ class CellGenerator
     end
     letters
   end
-  
+
+  def generate_letters_range
+    ("A"..last_letter).to_a
+  end
+
 
 
 end
