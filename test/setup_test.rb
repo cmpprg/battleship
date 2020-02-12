@@ -7,7 +7,6 @@ require "spy/integration"
 class SetupTest < Minitest::Test
   def setup
     @setup = Setup.new
-    @setup.initialize_new
   end
 
   def test_it_exists
@@ -21,34 +20,6 @@ class SetupTest < Minitest::Test
     assert_instance_of Ship, @setup.computer_submarine
     assert_instance_of Board, @setup.computer_board
     assert_instance_of Board, @setup.player_board
-  end
-
-  def test_welcome_method_play
-    play_gather_input_spy = Spy.on(@setup, :gather_input).and_return("p")
-    @setup.welcome?
-
-    assert @setup.valid_response?(@setup.gather_input)
-    assert @setup.welcome?
-
-  end
-
-  def test_welcome_method_quit
-    quit_gather_input_spy = Spy.on(@setup, :gather_input).and_return("q")
-    @setup.welcome?
-
-    assert @setup.valid_response?(@setup.gather_input)
-    assert_equal false, @setup.welcome?
-  end
-
-  def test_valid_response_method
-    play_game_input = "p"
-    quit_game_input = "q"
-    invalid_input = "$"
-
-
-    assert @setup.valid_response?(play_game_input)
-    assert @setup.valid_response?(quit_game_input)
-    assert_equal false, @setup.valid_response?(invalid_input)
   end
 
   def test_computer_setup_method

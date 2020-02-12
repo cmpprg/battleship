@@ -27,7 +27,7 @@ class Board
   end
 
   def valid_placement?(ship, coordinates)
-    check_empty?(coordinates) && (ship.length == coordinates.length) && (horizontal?(coordinates) ^ vertical?(coordinates))
+    (ship.length == coordinates.length) && (horizontal?(coordinates) ^ vertical?(coordinates)) && check_empty?(coordinates)
   end
 
   def horizontal?(coordinates)

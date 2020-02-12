@@ -1,21 +1,39 @@
 require_relative 'setup'
-class Turn
+class Game
 
   def initialize
-    @setup = Setup.new
+    @setup = nil
   end
 
   def start(play)
     puts "Welcome to BATTLESHIP"
     while play
-      play = @setup.welcome?
+      play = welcome?
       if play
-        @setup.initialize_new
+        @setup = Setup.new
         @setup.computer_setup
         @setup.player_setup
         game
       end
     end
+  end
+
+  def welcome?
+    user_input = ""
+    loop do
+      puts "Enter p to play. Enter q to quit"
+      puts ">>"
+      user_input = gets.chomp.downcase
+      break if valid_response?(user_input)
+    end
+    return false if user_input == "q"
+    true
+  end
+
+  def valid_response?(response)
+    return true if response == "p" || response == "q"
+    puts "Incorrect input. Please try again."
+    false
   end
 
   def game
@@ -123,9 +141,13 @@ class Turn
 
   def end_game(player_results, computer_results)
     if player_results || !computer_results
-      puts "You won!"
+      puts "****************************************"
+      puts " ~ ~ ~ ~ ~ ~ ~ ~YOU WON!~ ~ ~ ~ ~ ~ ~ ~ "
+      puts "****************************************"
     else
-      puts "I won!"
+      puts "****************************************"
+      puts "~ ~ ~ ~ ~ ~ ~ ~ ~I WON!~ ~ ~ ~ ~ ~ ~ ~ ~ "
+      puts "****************************************"
     end
   end
 
