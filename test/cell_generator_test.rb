@@ -5,7 +5,7 @@ require "./lib/cell_generator"
 class CellGeneratorTest < Minitest::Test
 
   def setup
-    @cell_generator = CellsGenerator.new(10, 9)
+    @cell_generator = CellGenerator.new(10, 9)
   end
 
   def test_it_exists
@@ -16,4 +16,6 @@ class CellGeneratorTest < Minitest::Test
     assert_equal 10, @cell_generator.height
     assert_equal 9, @cell_generator.width
   end
+
+
 end
