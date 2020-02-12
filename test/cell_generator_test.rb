@@ -17,5 +17,11 @@ class CellGeneratorTest < Minitest::Test
     assert_equal 9, @cell_generator.width
   end
 
+  def test_it_can_produce_the_last_letter_based_on_height
+    cell_generator1 = CellGenerator.new(27, 4)
+    cell_generator2 = CellGenerator.new(4123, 4)
+    assert_equal "AA", cell_generator1.last_letter
+    assert_equal "FBO", cell_generator2.last_letter
+  end
 
 end
