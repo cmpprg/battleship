@@ -22,6 +22,9 @@ class CellGenerator
     ("A"..last_letter).to_a
   end
 
+  def generate_numbers_range
+    ("1"..@width.to_s).to_a
+  end
 
 
 end

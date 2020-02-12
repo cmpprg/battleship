@@ -31,4 +31,13 @@ class CellGeneratorTest < Minitest::Test
     assert_equal ("A".."FBO").to_a, cell_generator2.generate_letters_range
   end
 
+  def test_it_can_generate_numbers_based_on_width
+    cell_generator1 = CellGenerator.new(4, 26)
+    cell_generator2 = CellGenerator.new(4, 4123)
+    assert_equal ("1".."27").to_a, cell_generator1.generate_numbers_range
+    assert_equal ("1".."4123").to_a, cell_generator2.generate_numbers_range
+  end
+
+  
+
 end
