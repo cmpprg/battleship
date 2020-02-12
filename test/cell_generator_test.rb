@@ -32,10 +32,16 @@ class CellGeneratorTest < Minitest::Test
   end
 
   def test_it_can_generate_numbers_based_on_width
-    cell_generator1 = CellGenerator.new(4, 26)
+    cell_generator1 = CellGenerator.new(4, 27)
     cell_generator2 = CellGenerator.new(4, 4123)
     assert_equal ("1".."27").to_a, cell_generator1.generate_numbers_range
     assert_equal ("1".."4123").to_a, cell_generator2.generate_numbers_range
+  end
+
+  def test_it_can_merge_letters_with_numbers_to_create_coordinates
+    cell_generator = CellGenerator.new(4, 4)
+    expected = ["A1", "A2", "A3", "A4", "B1", "B2", "B3", "B4", "C1", "C2", "C3", "C4", "D1", "D2", "D3", "D4"]
+    assert_equal expected, cell_generator.generate_coordinates
   end
 
   

@@ -26,5 +26,17 @@ class CellGenerator
     ("1"..@width.to_s).to_a
   end
 
+  def generate_coordinates
+    coordinates = []
+    generate_letters_range.each do |letter|
+      generate_numbers_range.each do |number|
+        coordinates << "#{letter}#{number}"
+      end
+    end
+    coordinates
+  end
+
+
+
 
 end
