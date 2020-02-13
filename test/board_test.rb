@@ -26,7 +26,7 @@ class BoardTest < Minitest::Test
     assert_equal true, board.valid_coordinate?("D4")
     assert_equal false, board.valid_coordinate?("A5")
     assert_equal false, board.valid_coordinate?("E1")
-    assert_equal false, board.valid_coordinate?("A22")
+    assert_equal false, board.valid_coordinate?(".")
   end
 
   def test_it_can_validate_placement
@@ -35,9 +35,9 @@ class BoardTest < Minitest::Test
     submarine = Ship.new("Submarine", 2)
 
     assert_equal false, board.valid_placement?(cruiser, ["A1", "A2", "A4"])
-    assert_equal false, board.valid_placement?(submarine, ["A1", "C1"])
-    assert_equal false, board.valid_placement?(cruiser, ["A3", "A2", "A1"])
-    assert_equal false, board.valid_placement?(submarine, ["C1", "B1"])
+    assert_equal false, board.valid_placement?(submarine, [""])
+    assert_equal false, board.valid_placement?(cruiser, ["/", "A2", "A3"])
+    assert_equal false, board.valid_placement?(submarine, ["B1", "C1", "D1"])
     assert_equal true, board.valid_placement?(cruiser, ["A1", "B1", "C1"])
     assert_equal true, board.valid_placement?(submarine, ["D3", "D4"])
   end
@@ -173,6 +173,7 @@ class BoardTest < Minitest::Test
     board = Board.new
 
     assert_equal 16, board.not_fired_upon.length
+    assert_equal true, board.not_fired_upon.keys.include?("A1")
 
     board.cells["A1"].fire_upon
     board.cells["D3"].fire_upon
@@ -180,8 +181,6 @@ class BoardTest < Minitest::Test
     assert_equal 14, board.not_fired_upon.length
     assert_equal false, board.not_fired_upon.keys.include?("A1")
     assert_equal false, board.not_fired_upon.keys.include?("D3")
-
-    board.cells
   end
 
   def test_coordinate_not_fired_upon_method
@@ -194,13 +193,6 @@ class BoardTest < Minitest::Test
     coord2 = board.coordinate_not_fired_upon
 
     assert board.not_fired_upon.keys.include?(coord2)
-  end
-
-  def test_that_it_can_fire_upon_a_cell
-    board = Board.new
-    board.fire_upon("A1")
-
-    assert board.cells["A1"].fired_upon?
   end
 
   def test_if_a_cell_has_been_fired_upon

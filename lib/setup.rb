@@ -4,30 +4,13 @@ require_relative 'computer_placement'
 class Setup
   attr_reader :computer_cruiser, :computer_submarine, :computer_board,:player_cruiser, :player_submarine, :player_board
 
-  def initialize_new
+  def initialize
     @player_cruiser = Ship.new("Cruiser", 3)
     @player_submarine = Ship.new("Submarine", 2)
     @computer_cruiser = Ship.new("Cruiser", 3)
     @computer_submarine = Ship.new("Submarine", 2)
     @computer_board = Board.new
     @player_board = Board.new
-  end
-
-  def welcome?
-    user_input = ""
-    loop do
-      puts "Enter p to play. Enter q to quit"
-      user_input = gather_input.downcase
-      break if valid_response?(user_input)
-    end
-    return false if user_input == "q"
-    true
-  end
-
-  def valid_response?(response)
-    return true if response == "p" || response == "q"
-    puts "Incorrect input. Please try again."
-    false
   end
 
   def computer_setup

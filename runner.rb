@@ -1,5 +1,5 @@
-require './lib/turn'
+require './lib/game'
 
-turn = Turn.new
+turn = Game.new
 
 turn.start(true)
