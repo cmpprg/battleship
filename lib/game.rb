@@ -83,9 +83,9 @@ class Game
   def validate_coordinate_exists?(coordinate)
     if !@setup.computer_board.valid_coordinate?(coordinate)
       puts "Coordinate does not exist on the board, please enter another coordinate: "
-      false
-    else
       true
+    else
+      false
     end
   end
 
