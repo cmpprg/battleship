@@ -80,7 +80,6 @@ class Board
     coordinates.all? do |coord|
       @cells[coord].empty?
     end
-
   end
 
   def place(ship, coordinates)
