@@ -1,6 +1,8 @@
 require_relative 'setup'
 class Game
 
+  attr_accessor :setup
+
   def initialize
     @setup = nil
   end
@@ -117,8 +119,8 @@ class Game
   def shot_results(player, computer)
     player_render = print_cell_results(@setup.computer_board.cells[player].render)
     computer_render = print_cell_results(@setup.player_board.cells[computer].render)
-    puts "Your shot on #{player} #{player_render}."
-    puts "My shot on #{computer} #{computer_render}."
+    p "Your shot on #{player} #{player_render}."
+    p "My shot on #{computer} #{computer_render}."
   end
 
   def player_game_over?
@@ -141,13 +143,13 @@ class Game
 
   def end_game(player_results, computer_results)
     if player_results || !computer_results
-      puts "****************************************"
-      puts " ~ ~ ~ ~ ~ ~ ~ ~YOU WON!~ ~ ~ ~ ~ ~ ~ ~ "
-      puts "****************************************"
+      p "****************************************"
+      p " ~ ~ ~ ~ ~ ~ ~ ~YOU WON!~ ~ ~ ~ ~ ~ ~ ~ "
+      p "****************************************"
     else
-      puts "****************************************"
-      puts "~ ~ ~ ~ ~ ~ ~ ~ ~I WON!~ ~ ~ ~ ~ ~ ~ ~ ~ "
-      puts "****************************************"
+      p "****************************************"
+      p "~ ~ ~ ~ ~ ~ ~ ~ ~I WON!~ ~ ~ ~ ~ ~ ~ ~ ~ "
+      p "****************************************"
     end
   end
 

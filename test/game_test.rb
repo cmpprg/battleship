@@ -51,6 +51,48 @@ class GameTest < Minitest::Test
     input = Kernel.gets
     game.stubs(:valid_coordinate?).returns(true)
   end
+
+  def test_it_can_print_cell_results
+    game = Game.new
+
+    assert_equal "was a miss", game.print_cell_results("M")
+    assert_equal "was a hit", game.print_cell_results("H")
+    assert_equal "sunk a ship", game.print_cell_results("S")
+  end
+
+  def test_it_can_return_shot_results
+    game = Game.new
+
+    game.setup = Setup.new
+    expected = "Your shot on A3 was a miss"
+               "My shot on B1 sunk a ship"
+
+    assert_equal expected, game.shot_results("A3", "B1")
+  end
+
+  def test_player_game_over
+    skip
+  end
+
+  def test_computer_game_over
+    skip
+  end
+
+  def test_it_can_end_game
+    game = Game.new
+
+    expected1 = "****************************************"
+                "~ ~ ~ ~ ~ ~ ~ ~YOU WON!~ ~ ~ ~ ~ ~ ~ ~"
+                "****************************************"
+
+    assert_equal expected1, game.end_game(true, nil)
+
+    expected2 =  "****************************************"
+                 "~ ~ ~ ~ ~ ~ ~ ~ ~I WON!~ ~ ~ ~ ~ ~ ~ ~ ~"
+                 "****************************************"
+
+    assert_equal expected2, game.end_game(nil, true)
+  end
 end
 
 #
