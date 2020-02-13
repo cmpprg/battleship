@@ -13,30 +13,7 @@ class GameTest < Minitest::Test
     assert_instance_of Game, game
   end
 
-  def test_it_can_play_the_game
-    skip 
-  end
-
-  def test_it_can_start_the_game
-    skip
-  end
-
-  def test_shot_implementation
-    skip
-  end
-
-  def test_player_fire_on_shot_implementation
-    skip
-  end
-
-  def test_player_shot_implementation
-    skip
-    assert_equal true, game.shot_valid?("A1")
-    assert_equal "A1", game.player_shot_implementation
-  end
-
   def test_shot_valid
-    skip
     game = Game.new
     game.setup = Setup.new
 
@@ -145,4 +122,4 @@ class GameTest < Minitest::Test
 
     assert_equal expected2, stdout
   end
-end]
+end

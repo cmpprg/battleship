@@ -77,14 +77,14 @@ class Game
 
   def shot_valid?(coordinate)
     validate_coordinate_exists?(coordinate) &&
-        validate_cell_fired_upon?(coordinate)
+        !validate_cell_fired_upon?(coordinate)
   end
 
   def validate_coordinate_exists?(coordinate)
-    if !@setup.computer_board.valid_coordinate?(coordinate)
-      puts "Coordinate does not exist on the board, please enter another coordinate: "
+    if @setup.computer_board.valid_coordinate?(coordinate)
       true
     else
+      puts "Coordinate does not exist on the board, please enter another coordinate: "
       false
     end
   end
